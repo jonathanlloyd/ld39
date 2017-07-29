@@ -9,6 +9,33 @@ const Sprite = PIXI.Sprite;
 const STAGE_WIDTH_PX = 800;
 const STAGE_HEIGHT_PX = 494;
 
+const GRID_WIDTH = 10;
+const GRID_HEIGHT = 10;
+
+const ORIENTATIONS = {
+  NORTH: 0,
+  EAST: 1,
+  SOUTH: 2,
+  WEST: 3
+};
+
+const TYPES = {
+  A: 0, B: 1, C: 2, D: 3
+}
+
+var randomProperty = function (obj) {
+    var keys = Object.keys(obj)
+    return obj[keys[ keys.length * Math.random() << 0]];
+};
+
+var getPropFromValue = function(obj, val) {
+  var prop;
+  for(prop in obj) {
+    if(obj.hasOwnProperty(prop) && obj.prop == val) {
+      return prop;
+    }
+  }
+};
       
 
 //Create a Pixi stage and renderer 
@@ -23,6 +50,7 @@ loader
 
 
 let logoSprite;
+let grid;
 
 function setup() {
   logoSprite = new Sprite(resources["img/ld-logo.png"].texture);
@@ -32,6 +60,16 @@ function setup() {
   logoSprite.y = STAGE_HEIGHT_PX / 2;
   stage.addChild(logoSprite);
  
+  var x, y;
+  grid = [];
+  for(x = 0; x < GRID_WIDTH; x++) {
+    grid[x] = [];
+    for(y = 0; y < GRID_HEIGHT; y++) {
+      grid[x][y] = GridTile.makeRandomTile();
+    }
+  }
+
+  console.log(grid);
   //Start the game loop
   gameLoop();
 }
@@ -40,4 +78,22 @@ function gameLoop(){
   requestAnimationFrame(gameLoop);
   logoSprite.rotation += 0.01;
   renderer.render(stage);
+}
+
+class GridTile {
+  constructor(type, orientation) {
+    this.type = type;
+    this.orientation = orientation;
+  }
+
+  rotate() {
+    this.orientation = (this.orientation + 1) % 4;
+  }
+
+  static makeRandomTile() {
+    var randomTileType = randomProperty(TYPES), 
+        randomOrientation = randomProperty(ORIENTATIONS);
+
+    return new GridTile(randomTileType, randomOrientation);
+  }
 }
