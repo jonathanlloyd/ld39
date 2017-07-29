@@ -23,13 +23,13 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'ld38.js'
+    filename: 'ld39.js'
   },
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'static/index.ejs',
-      title: 'Ludum Dare 38'
+      title: 'Ludum Dare 39'
     }),
     new CopyWebpackPlugin([
       { from: 'static/assets/' },
