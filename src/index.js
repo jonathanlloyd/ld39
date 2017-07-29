@@ -23,20 +23,10 @@ const TYPES = {
   A: 0, B: 1, C: 2, D: 3
 }
 
-var randomProperty = function (obj) {
-    var keys = Object.keys(obj)
+function randomProperty (obj) {
+    const keys = Object.keys(obj)
     return obj[keys[ keys.length * Math.random() << 0]];
 };
-
-var getPropFromValue = function(obj, val) {
-  var prop;
-  for(prop in obj) {
-    if(obj.hasOwnProperty(prop) && obj.prop == val) {
-      return prop;
-    }
-  }
-};
-      
 
 //Create a Pixi stage and renderer 
 const stage = new Container();
@@ -59,8 +49,8 @@ function setup() {
   logoSprite.x = STAGE_WIDTH_PX / 2;
   logoSprite.y = STAGE_HEIGHT_PX / 2;
   stage.addChild(logoSprite);
- 
-  var x, y;
+
+  let x, y;
   grid = [];
   for(x = 0; x < GRID_WIDTH; x++) {
     grid[x] = [];
@@ -91,7 +81,7 @@ class GridTile {
   }
 
   static makeRandomTile() {
-    var randomTileType = randomProperty(TYPES), 
+    const randomTileType = randomProperty(TYPES),
         randomOrientation = randomProperty(ORIENTATIONS);
 
     return new GridTile(randomTileType, randomOrientation);
